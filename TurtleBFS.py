@@ -2,7 +2,6 @@ import turtle
 import time
 from collections import deque
 
-# ---------------- Grid Setup ----------------
 grid = [
     [0, 0, 0, 0, 0],
     [0, 1, 1, 0, 0],
@@ -13,9 +12,8 @@ grid = [
 
 start = (0, 0)
 goal = (4, 4)
-moves = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # up, down, left, right
+moves = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
-# ---------------- BFS with Visualization ----------------
 cell_size = 40
 rows, cols = 5, 5
 
@@ -29,7 +27,6 @@ pen.speed(0)
 pen.penup()
 pen.hideturtle()
 
-# Draw a single cell
 def draw_cell(i, j, color):
     x = j * cell_size - (cols * cell_size / 2)
     y = -(i * cell_size - (rows * cell_size / 2))
@@ -41,7 +38,6 @@ def draw_cell(i, j, color):
         pen.right(90)
     pen.end_fill()
 
-# Draw the static grid
 def draw_grid():
     for i in range(rows):
         for j in range(cols):
@@ -54,7 +50,6 @@ draw_grid()
 def to_screen(x, y):
     return y * cell_size - (cols * cell_size / 2) + cell_size / 2, -(x * cell_size - (rows * cell_size / 2)) - cell_size / 2
 
-# BFS visualization
 def bfs_visual(start, goal):
     queue = deque([[start]])
     visited = set([start])
@@ -65,14 +60,12 @@ def bfs_visual(start, goal):
         x, y = path[-1]
         nodes_expanded += 1
 
-        # visualize current node exploration
         if (x, y) != start and (x, y) != goal:
             draw_cell(x, y, "lightgray")
             screen.update()
             time.sleep(0.2)
 
         if (x, y) == goal:
-            # Draw final path
             for (px, py) in path:
                 if (px, py) not in [start, goal]:
                     draw_cell(px, py, "deepskyblue")
@@ -87,7 +80,6 @@ def bfs_visual(start, goal):
                 queue.append(path + [(nx, ny)])
     return None, nodes_expanded
 
-# mark start and goal
 draw_cell(start[0], start[1], "green")
 draw_cell(goal[0], goal[1], "red")
 screen.update()
