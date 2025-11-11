@@ -3,23 +3,28 @@ import time
 from collections import deque
 
 grid = [
-    [0, 0, 0, 0, 0],
-    [0, 1, 1, 0, 0],
-    [0, 1, 0, 0, 0],
-    [1, 1, 0, 1, 0],
-    [0, 0, 1, 0, 0]
+    [0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+    [1, 1, 0, 1, 0, 1, 0, 1, 1, 0],
+    [0, 0, 0, 1, 0, 0, 0, 0, 1, 0],
+    [0, 1, 1, 0, 0, 1, 1, 0, 0, 0],
+    [0, 1, 0, 0, 1, 0, 0, 1, 0, 0],
+    [0, 1, 0, 1, 0, 1, 0, 1, 1, 0],
+    [0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+    [1, 1, 0, 1, 1, 1, 0, 1, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 1, 0],
+    [0, 1, 0, 1, 0, 1, 0, 0, 0, 0]
 ]
 
 start = (0, 0)
-goal = (4, 4)
+goal = (9, 9)
 moves = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
-cell_size = 40
-rows, cols = 5, 5
+cell_size = 30
+rows, cols = 10, 10
 
 screen = turtle.Screen()
-screen.title("BFS Grid Navigation Visualization")
-screen.setup(width=500, height=500)
+screen.title("BFS Grid Navigation Visualization (10x10)")
+screen.setup(width=700, height=700)
 screen.tracer(0)
 
 pen = turtle.Turtle()
@@ -63,19 +68,19 @@ def bfs_visual(start, goal):
         if (x, y) != start and (x, y) != goal:
             draw_cell(x, y, "lightgray")
             screen.update()
-            time.sleep(0.2)
+            time.sleep(0.1)
 
         if (x, y) == goal:
             for (px, py) in path:
                 if (px, py) not in [start, goal]:
                     draw_cell(px, py, "deepskyblue")
                     screen.update()
-                    time.sleep(0.2)
+                    time.sleep(0.1)
             return path, nodes_expanded
 
         for dx, dy in moves:
             nx, ny = x + dx, y + dy
-            if 0 <= nx < 5 and 0 <= ny < 5 and grid[nx][ny] == 0 and (nx, ny) not in visited:
+            if 0 <= nx < rows and 0 <= ny < cols and grid[nx][ny] == 0 and (nx, ny) not in visited:
                 visited.add((nx, ny))
                 queue.append(path + [(nx, ny)])
     return None, nodes_expanded
